@@ -22,6 +22,8 @@ namespace TodoApi.Controllers
         public async Task<IActionResult> CreateTodo([FromBody] TodoCreateDTO todoCreateDTO)
         {
             _logger.LogInformation("creating new todo....");
+            if (todoCreateDTO.Title == String.Empty)
+                return BadRequest();
             var processedDto = new Todo { Title = todoCreateDTO.Title, Id = Guid.NewGuid() }; 
 
             await _db.AddAsync(processedDto);

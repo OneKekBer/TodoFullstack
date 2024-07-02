@@ -1,44 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import TodoItem from './components/TodoItem'
-import axios from 'axios'
+import TodoForm from './components/TodoForm'
+import { useAppDispatch, useAppSelector } from './state/hooks'
+import { fetchTodos } from './state/todo/todoSlice'
 
 export interface ITodo {
-	Title: string
-	IsCompleted: boolean
-	Id: string
+	title: string
+	isCompleted: boolean
+	id: string
 }
 
 const App = () => {
-	const [todos, setTodos] = useState<ITodo[]>([])
+	const { todos, status, error } = useAppSelector(state => state.todo)
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		GetAllTodos()
-	}, [])
-
-	const GetAllTodos = async () => {
-		console.log('getting todos')
-		const res = await axios.get(`https://localhost:7063/api/todo`)
-		if (res.status != 200) {
-			throw new Error('Failed to fetch todos')
-		}
-
-		const data = await res.data.json()
-		setTodos(data)
-	}
+		dispatch(fetchTodos())
+	}, [dispatch])
 
 	return (
-		<div className='flex w-screen h-screen'>
-			<div></div>
-			{todos.length != 0 ? (
-				<div>
-					{todos.map(todo => {
-						return <TodoItem Todo={todo} />
-					})}
-					<div></div>
+		<div className='flex justify-center items-center w-screen h-screen bg-slate-500'>
+			<div className='w-[90vw] h-[60vh] md:w-[500px] md:h-[500px] overflow-hidden flex flex-col p-[10px] md:p-[40px] rounded-2xl shadow-2xl items-center bg-slate-50'>
+				<h2 className='text-[40px] font-bold text-center'>Your todos</h2>
+				<TodoForm />
+				<div className='mt-[50px] overflow-y-scroll w-full'>
+					{todos.length != 0 ? (
+						<div className='flex flex-col gap-2'>
+							{todos.map(todo => {
+								console.log(todo)
+								return <TodoItem Todo={todo} />
+							})}
+							<div></div>
+						</div>
+					) : (
+						<div className='text-center text-[30px]'>
+							there are no todos((
+						</div>
+					)}
 				</div>
-			) : (
-				<div>there are no todos((</div>
-			)}
+			</div>
 		</div>
 	)
 }
