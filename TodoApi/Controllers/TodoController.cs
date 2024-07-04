@@ -23,7 +23,7 @@ namespace TodoApi.Controllers
         {
             _logger.LogInformation("creating new todo....");
             if (todoCreateDTO.Title == string.Empty)
-                return BadRequest();
+                throw new BadHttpRequestException("Title can`t be empty");
             var processedDto = new Todo { Title = todoCreateDTO.Title, Id = Guid.NewGuid() }; 
 
             await _db.AddAsync(processedDto);

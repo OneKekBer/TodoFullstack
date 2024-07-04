@@ -43,8 +43,8 @@ const TodoItem = ({ Todo }: { Todo: ITodo }) => {
 	}
 
 	return (
-		<div className=' w-full p-2 bg-slate-100' key={id}>
-			<div className='flex md:flex-row flex-col w-full justify-between items-center '>
+		<div className='w-full p-2  bg-slate-100' key={id}>
+			<div className='flex flex-col items-center justify-between w-full md:flex-row '>
 				<div
 					className={`text-black mb-1 font-semibold ${
 						isCompleted ? 'line-through' : ''
@@ -55,14 +55,14 @@ const TodoItem = ({ Todo }: { Todo: ITodo }) => {
 				<div className='flex gap-3'>
 					{isCompleted ? (
 						<button
-							className='items-center p-1 px-3 justify-center font-bold text-white bg-red-200'
+							className='items-center justify-center p-1 px-3 font-bold text-white bg-red-200'
 							onClick={() => ToggleTodo(id)}
 						>
 							Undo
 						</button>
 					) : (
 						<button
-							className='items-center p-1 px-3 justify-center font-bold text-white bg-green-500'
+							className='items-center justify-center p-1 px-3 font-bold text-white bg-green-500'
 							onClick={() => ToggleTodo(id)}
 						>
 							Done
@@ -70,7 +70,7 @@ const TodoItem = ({ Todo }: { Todo: ITodo }) => {
 					)}
 
 					<button
-						className='items-center p-1 px-3 justify-center font-bold text-white bg-red-500'
+						className='items-center justify-center p-1 px-3 font-bold text-white bg-red-500'
 						onClick={() => DeleteTodo(id)}
 					>
 						Delete
