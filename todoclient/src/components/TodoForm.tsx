@@ -26,7 +26,6 @@ const TodoForm = () => {
 
 			if (!res.ok) {
 				const errorData = await res.json()
-				console.log(errorData.Message)
 				setServerError(errorData.Message)
 				throw new Error('Failed to create todo')
 			}
