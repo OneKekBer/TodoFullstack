@@ -35,8 +35,7 @@ public class GlobalExceptionHandler
         var response = new
         {
             StatusCode = context.Response.StatusCode,
-            Message = "Internal Server Error. Please try again later.",
-            Detailed = exception.Message  // Optionally include detailed information
+            Message = exception.Message 
         };
 
         var jsonResponse = JsonSerializer.Serialize(response);

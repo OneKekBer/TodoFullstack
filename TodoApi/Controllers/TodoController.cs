@@ -22,7 +22,7 @@ namespace TodoApi.Controllers
         public async Task<IActionResult> CreateTodo([FromBody] TodoCreateDTO todoCreateDTO)
         {
             _logger.LogInformation("creating new todo....");
-            if (todoCreateDTO.Title == String.Empty)
+            if (todoCreateDTO.Title == string.Empty)
                 return BadRequest();
             var processedDto = new Todo { Title = todoCreateDTO.Title, Id = Guid.NewGuid() }; 
 
@@ -36,8 +36,8 @@ namespace TodoApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ToggleTodoById(Guid id)
         {
-            var todoItem = await _db.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
-
+            var todoItem = await _db.Todos.FirstOrDefaultAsync(todo => todo.Id == id) ?? throw new FailedGetElementFromDatabaseException();
+            
             todoItem.ToggleTodo();
 
             _db.Todos.Update(todoItem);
@@ -57,7 +57,7 @@ namespace TodoApi.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> EditTodoById(Guid id, [FromBody] TodoEditDto todoEditDto)
         {
-            var todoItem = await _db.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
+            var todoItem = await _db.Todos.FirstOrDefaultAsync(todo => todo.Id == id) ?? throw new FailedGetElementFromDatabaseException();
  
             todoItem.Title = todoEditDto.Title;
 
@@ -71,7 +71,7 @@ namespace TodoApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodo(Guid id)
         {
-            var todoItem = await _db.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
+            var todoItem = await _db.Todos.FirstOrDefaultAsync(todo => todo.Id == id) ?? throw new FailedGetElementFromDatabaseException();
 
             _db.Todos.Remove(todoItem);
 

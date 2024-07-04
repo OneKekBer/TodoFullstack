@@ -32,10 +32,12 @@ const App = () => {
 							})}
 							<div></div>
 						</div>
+					) : error ? (
+						<h1 className='text-center text-2xl'>Error!!</h1>
+					) : status === 'loading' ? (
+						<h1 className='text-center text-2xl'>Loading</h1>
 					) : (
-						<div className='text-center text-[30px]'>
-							there are no todos((
-						</div>
+						<h1 className='text-center text-2xl'>There are no todos</h1>
 					)}
 				</div>
 			</div>
