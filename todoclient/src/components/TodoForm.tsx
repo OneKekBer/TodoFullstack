@@ -32,6 +32,7 @@ const TodoForm = () => {
 			}
 			// Optionally, reset the input or handle success
 			setInput('')
+			setServerError('')
 			dispatch(fetchTodos())
 			// Optionally, handle the response
 			const data = await res.json()
