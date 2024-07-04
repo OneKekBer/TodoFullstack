@@ -50,7 +50,7 @@ const TodoForm = () => {
 				<input
 					onChange={HandleInput}
 					value={input}
-					className='bg-slate-200 h-[30px]'
+					className='h-full bg-slate-200'
 					type='text'
 				/>
 				<button className='items-center justify-center p-1 px-3 font-bold text-white bg-green-500'>
