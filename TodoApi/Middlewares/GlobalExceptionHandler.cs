@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Text.Json;
 
 public class GlobalExceptionHandler
@@ -16,19 +17,17 @@ public class GlobalExceptionHandler
     {
         try 
         {
-            _logger.LogInformation("GlobalExceptionMiddleware is working!");
             await _next(httpContext);
         }
         catch (Exception ex)
         {
-            _logger.LogError("something went wrong");
             await HandleExceptionAsync(httpContext, ex);
         }
     }
 
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        _logger.LogInformation("HandleExceptionAsync is working");
+        _logger.LogError(exception.Message);
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
