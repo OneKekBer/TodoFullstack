@@ -23,7 +23,7 @@ public class GlobalExceptionHandler
         }
         catch(BadHttpRequestException ex)
         {
-            await BadRequestHandlerException(httpContext, ex);
+            await HandlerBadRequestException(httpContext, ex);
         }
         catch (Exception ex)
         {
@@ -31,15 +31,14 @@ public class GlobalExceptionHandler
         }
     }
 
-    private Task BadRequestHandlerException(HttpContext context, BadHttpRequestException exception)
+    private Task HandlerBadRequestException(HttpContext context, BadHttpRequestException exception)
     {
         _logger.LogError(exception.Message);
         context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
         var response = new
         {
-            StatusCode = context.Response.StatusCode, //maybe its useless
             Message = exception.Message,
         };
 
@@ -56,7 +55,6 @@ public class GlobalExceptionHandler
 
         var response = new
         {
-            StatusCode = context.Response.StatusCode, //maybe its useless
             Message = "Internal Server error" 
         };
 
